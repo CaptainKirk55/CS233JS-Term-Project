@@ -28,13 +28,9 @@ class PlaneFinder {
         fetch(`https://airlabs.co/api/v9/flights?reg_number=${this.regNum}&api_key=${AIRLABS_KEY}`)
             .then(response => response.json())
             .then(data => {
-                console.log("THEN");
-                console.log(this.regNum);
-                console.log(data);
                 this.latitude = parseFloat(data.response[0].lat)
                 this.longitude = parseFloat(data.response[0].lng)
                 this.words.innerHTML = this.renderWords(data);
-                console.log("lat: " + this.latitude);
                 this.initMap(this.latitude, this.longitude);
                 this.$infoContainer.classList.remove("d-none");
             })
@@ -45,11 +41,18 @@ class PlaneFinder {
             });    
     }
 
-    renderWords(data)
-    {
-        //Find the direction that the plane is going
-        let direction = data.response[0].dir;
-        let directionWord = (direction < 22.5) ? "North" :
+    //Render the Plane Info: section
+    renderWords(data) {
+        return `
+        <p>Flight Number: ${data.response[0].flight_number}</p>
+        <p>Direction: ${this.getDirection(data.response[0].dir)}</p>
+        <p>Status: ${data.response[0].status}</p>
+        <p>Last Updated: ${getDate(data.response[0].updated)}`
+    }
+
+    //Take a direction value between 0 and 360 and put a word to it
+    getDirection(direction) {
+        return (direction < 22.5) ? "North" :
         (direction < 67.5) ? "Northeast" : 
         (direction < 112.5) ? "East" : 
         (direction < 157.5) ? "Southeast" : 
@@ -58,14 +61,7 @@ class PlaneFinder {
         (direction < 292.5) ? "West" : 
         (direction < 337.5) ? "Northwest" : 
         "North"; 
-
-        return `
-        <p>Flight Number: ${data.response[0].flight_number}</p>
-        <p>Direction: ${directionWord}</p>
-        <p>Status: ${data.response[0].status}</p>
-        <p>Last Updated: ${getDate(data.response[0].updated)}`
     }
-
     //Initialize the map with a given latitude and longitude
     initMap(latitude, longitude) {   
         const map = new google.maps.Map(document.getElementById('map'), {

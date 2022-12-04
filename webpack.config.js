@@ -80,7 +80,6 @@ module.exports = {
       /* app uses global SERVER_URL rather than process.env.SERVER_URL */
       new webpack.DefinePlugin({
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        SERVER_URL: JSON.stringify(process.env.SERVER_URL),
         GMAP_KEY: JSON.stringify(process.env.GMAP_KEY),
         AIRLABS_KEY: JSON.stringify(process.env.AIRLABS_KEY),
       }),

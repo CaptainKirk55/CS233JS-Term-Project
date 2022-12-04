@@ -21,12 +21,7 @@ class PlaneFinder {
         event.preventDefault();
         this.$errorContainer.classList.add("d-none");
         this.$infoContainer.classList.add("d-none");
-
-        console.log("FORM SUBMITTED");
-        console.log(this.$reg.value);
         this.regNum = this.$reg.value;
-        console.log(this.regNum);
-        console.log({AIRLABS_KEY});
         //Execute the API call
         //If api call fails show the error message
         //If it succeeds show the map and other data

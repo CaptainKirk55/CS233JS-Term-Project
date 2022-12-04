@@ -84,6 +84,14 @@ module.exports = {
         GMAP_KEY: JSON.stringify(process.env.GMAP_KEY),
         AIRLABS_KEY: JSON.stringify(process.env.AIRLABS_KEY),
       }),
+      new copyPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, "src/assets"),
+            to: path.resolve(__dirname, "dist/assets"),
+          },
+        ],
+      }),
     ],
     /* separates js (and css) that is shared between bundles - allows browser to cache */
     optimization: {
